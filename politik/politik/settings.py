@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
+    'poligraf',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -76,7 +78,7 @@ WSGI_APPLICATION = 'politik.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mydb',
         'USER': 'politik',
         'PASSWORD': 'polipass',
