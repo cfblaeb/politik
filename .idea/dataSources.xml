@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="42173147">
+  <component name="DataSourceManagerImpl" format="xml" hash="1450683985">
     <data-source source="LOCAL" name="Django default" uuid="aa04e9ee-00c5-41ff-869d-0759f369b3ce">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
@@ -11,14 +11,6 @@
       <explain-plan-config>
         <provider>com.intellij.database.plan.ExplainPlanProvider.NullExplainPlanProvider</provider>
       </explain-plan-config>
-      <libraries>
-        <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/postgresql-driver-license.txt</url>
-        </library>
-        <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/postgresql-9.4-1201.jdbc4.jar</url>
-        </library>
-      </libraries>
     </data-source>
   </component>
 </project>
