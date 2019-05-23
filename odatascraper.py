@@ -12,20 +12,20 @@ def scrape(table):
     :return:
     """
 
-    # ft.dk tillader kun at du henter 20 rækker per kald
+    # ft.dk tillader kun at du henter 100 rækker per kald
     # derfor så starte vi med at spørge om hvor mange rækker der er i alt
     totalcount = int(rq.get('http://oda.ft.dk/api/{}'.format(table), params={"$inlinecount": "allpages"}).json()['odata.count'])
     ccount = 0
-
+    print(f"Linjer der skal hentes: {totalcount}")
     # herefter henter vi indtil vi har hentet alt
     while ccount < totalcount:
-        r = rq.get('http://oda.ft.dk/api/{}'.format(table), params={"$skip": ccount})
+        r = rq.get(f'http://oda.ft.dk/api/{table}', params={"$skip": ccount})
         for row in r.json()['value']:
             yield row
 
-        ccount += 20
-        if ccount % 10000 == 0:
-            print("{}/{}".format(ccount, totalcount))
+        ccount += 100
+        if ccount % 1000 == 0:
+            print(f"Hentet {ccount}/{totalcount}")
 
 #her er NOGEN af de tables der er tilgængelige...et par af dem eksistere vist ikke...
 list_of_tables = [
@@ -65,8 +65,8 @@ list_of_tables = [
     "Sagstype",
     "Stemme"]
 
-# opret forbindelse til en lokal postgresql database
-con = create_engine('postgresql://politik:polipass@localhost/mydb')
+# opret forbindelse til sqlite database
+con = create_engine('sqlite:///politik.sqlite')
 
 
 # hent alle tables
@@ -74,5 +74,8 @@ for tab in list_of_tables:
     print(tab)
     try:
         pd.DataFrame.from_dict(scrape(tab)).to_sql(tab, con, index=False, if_exists='replace')
-    except:
-        print("some error for {}".format(tab))
+    except KeyboardInterrupt:
+        break
+    except Exception as e:
+        print(e)
+        print(f"Fejl ved hentning af {tab}")
